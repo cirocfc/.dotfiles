@@ -1,0 +1,12 @@
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2
+[user]
+	signingKey = CCA6F68A7CBE3E92
+	name = Ciro Ferreira da Cruz
+	email = ciro.cfc@gmail.com
+[http]
+	sslVerify = true
+[init]
+	defaultBranch = master
