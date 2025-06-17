@@ -6,17 +6,27 @@
 
 
 # ? +-----------------------------------------------------------+
+# ? | fkill                                                     |
+# ? +-----------------------------------------------------------+
+# ? | Force kill a process by name.                             |
+# ? +-----------------------------------------------------------+
+fkill() {
+  echo "$1"
+  sudo kill -9 "$(ps -ef | grep $1 | grep -v grep | awk '{print $2}')"
+}
+
+# ? +-----------------------------------------------------------+
 # ? | docker.login                                              |
 # ? +-----------------------------------------------------------+
 # ? | Utility to login to a Docker Registry.                    |
 # ? +-----------------------------------------------------------+
-docker.login.ip() {
+docker.login.ecr() {
   aws ecr get-login-password --profile $DEFAULT_AWS_ECR_PROFILE | \
     docker login --username AWS --password-stdin ${DEFAULT_AWS_ECR_URL}
 }
 
-docker.login.erp() {
-  docker login -u caadmin -p "${DOCKER_TOKEN}"
+docker.login() {
+  docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_TOKEN}"
 }
 
 # ? +-----------------------------------------------------------+
@@ -175,8 +185,17 @@ sonar.pr() {
 # ? +-----------------------------------------------------------+
 vault.dev() {
   export VAULT_ADDR="$DEFAULT_VAULT_DEV"
-  vault login --method=github -no-print token=$GITHUB_TOKEN
+  vault login --method=github token=$GITHUB_TOKEN
   echo "Connected to DEV vault"
+}
+
+# ? +-----------------------------------------------------------+
+# ? | vault.hml                                                 |
+# ? +-----------------------------------------------------------+
+vault.hml() {
+  export VAULT_ADDR="$DEFAULT_VAULT_HML"
+  vault login --method=github token=$GITHUB_TOKEN
+  echo "Connected to HML vault"
 }
 
 # ? +-----------------------------------------------------------+

@@ -3,44 +3,58 @@
 # ? +-----------------------------------------------------------+
 # ? | Preload                                                   |
 # ? +-----------------------------------------------------------+
-source "$MY_DOT_FILES/config/preload.sh"
+source "$MY_DOTFILES/config/preload.sh"
 
 # ? +-----------------------------------------------------------+
 # ? | oh-my-zsh                                                 |
 # ? +-----------------------------------------------------------+
-source "$MY_DOT_FILES/config/shell.sh"
+source "$MY_DOTFILES/config/shell.sh"
 
 # ? +===========================================================+
 # ? | Themes                                                    |
 # ? +===========================================================+
-source "$MY_DOT_FILES/config/themes.sh"
+source "$MY_DOTFILES/config/themes.sh"
+
+# ? +-----------------------------------------------------------+
+# ? | Company Secrets                                           |
+# ? +-----------------------------------------------------------+
+if [ -f "$MY_DOTFILES/.secrets/.company_secrets.sh" ]; then
+  source "$MY_DOTFILES/.secrets/.company_secrets.sh"
+fi
 
 # ? +-----------------------------------------------------------+
 # ? | Secrets                                                   |
 # ? +-----------------------------------------------------------+
-source "$MY_DOT_FILES/secrets/secrets.sh"
+source "$MY_DOTFILES/config/secrets.sh"
+
+# ? +-----------------------------------------------------------+
+# ? | Company Variables                                         |
+# ? +-----------------------------------------------------------+
+if [ -f "$MY_DOTFILES/.secrets/.company_variables.sh" ]; then
+  source "$MY_DOTFILES/.secrets/.company_variables.sh"
+fi
 
 # ? +-----------------------------------------------------------+
 # ? | Variables                                                 |
 # ? +-----------------------------------------------------------+
-source "$MY_DOT_FILES/config/variables.sh"
+source "$MY_DOTFILES/config/variables.sh"
 
 # ? +===========================================================+
 # ? | Aliases                                                   |
 # ? +===========================================================+
-source "$MY_DOT_FILES/config/aliases.sh"
+source "$MY_DOTFILES/config/aliases.sh"
 
 # ? +===========================================================+
 # ? | Functions                                                 |
 # ? +===========================================================+
-source "$MY_DOT_FILES/config/functions.sh"
+source "$MY_DOTFILES/config/functions.sh"
 
 # ? +===========================================================+
 # ? | Tools                                                     |
 # ? +===========================================================+
-source "$MY_DOT_FILES/config/tools.sh"
+source "$MY_DOTFILES/config/tools.sh"
 
 # ? +===========================================================+
 # ? | Autocomplete                                              |
 # ? +===========================================================+
-source "$MY_DOT_FILES/config/themes.sh"
+source "$MY_DOTFILES/config/autocomplete.sh"

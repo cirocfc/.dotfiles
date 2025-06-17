@@ -4,7 +4,7 @@
 # ? | TOOLS                                                     |
 # ? +===========================================================+
 
-# TOOLS_DIR="$MY_DOT_FILES/_tools"
+# TOOLS_DIR="$MY_DOTFILES/_tools"
 
 # if [ -d "$TOOLS_DIR" ]; then
 #   for file in "$TOOLS_DIR"/*; do

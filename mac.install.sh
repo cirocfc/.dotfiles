@@ -67,15 +67,16 @@ install_brew_common_packages() {
     openssh
     ca-certificates
     wget
-    jq
     git
-    awscli
+    zsh
     bat
+    jq
+    awscli
+    bitwarden-cli
     helm
     kubectl
     k9s
     tfenv
-    zsh
   )
 
   for package in "${packages[@]}"; do
@@ -205,6 +206,18 @@ install_vscode() {
 }
 
 # ? +-----------------------------------------------------------+
+# ? | Install Spotify                                           |
+# ? +-----------------------------------------------------------+
+install_spotify() {
+  if [ -d "/Applications/Spotify.app" ]; then
+    echo "Spotify is already installed."
+  else
+    echo "Installing Spotify..."
+    brew install --cask spotify
+  fi
+}
+
+# ? +-----------------------------------------------------------+
 # ? | iTerm                                                     |
 # ? +-----------------------------------------------------------+
 install_iterm() {
@@ -242,33 +255,12 @@ configure_iterm() {
   # defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 }
 
-# ? +-----------------------------------------------------------+
-# ? | Add dotfiles secrets                                      |
-# ? +-----------------------------------------------------------+
-add_secrets() {
-  echo "Adding dotfiles secrets..."
-  
-  if ! [ -f $HOME/.aws/config ]; then
-    echo "Add .aws/config"
-    mkdir -p $HOME/.aws
-    cp $SCRIPT_DIR/secrets/.aws/config $HOME/.aws/config
-  fi
-
-  if ! [ -f $HOME/.kube/config ]; then
-    echo "Add .kube/config"
-    mkdir -p $HOME/.kube
-    cp $SCRIPT_DIR/secrets/.kube/config $HOME/.kube/config
-  fi
-
-  if ! [ -f $HOME/.npmrc ]; then
-    echo "Add .npmrc"
-    cp $SCRIPT_DIR/secrets/.npmrc $HOME/.npmrc
-  fi
-
-  if ! [ -f $HOME/.ssh ]; then
-    echo "Add .ssh"
-    cp -r $SCRIPT_DIR/secrets/.ssh $HOME/.ssh
-  fi
+# ? +===========================================================+
+# ? | Install Helm plugins                                      |
+# ? +===========================================================+
+install_helm_plugins() {
+  echo "Installing Helm plugins..."
+  helm plugin install https://github.com/databus23/helm-diff
 }
 
 # ? +===========================================================+
@@ -278,15 +270,27 @@ add_secrets() {
 install_dotfiles() {
   echo "Installing .dotfiles..."
   if [ -f $HOME/.zshrc ]; then
+    # Backup existing .zshrc
     mv -f $HOME/.zshrc $HOME/.zshrc.bak
   fi
+
+  if [ -f $SCRIPT_DIR/.secrets/.zsh_history ]; then
+    # Backup existing zsh history
+    if [ -f $HOME/.zsh_history ]; then
+      mv -f $HOME/.zsh_history $HOME/.zsh_history.bak
+    fi
+
+    # Add zsh history symlink
+    ln -sf $SCRIPT_DIR/.secrets/.zsh_history $HOME/.zsh_history
+  fi
+
   # source .dotfiles/index to .zshrc
   cat <<EOF >> $HOME/.zshrc
 # ? +-----------------------------------------------------------+
 # ? | Sourcing my .dotfiles                                     |
 # ? +-----------------------------------------------------------+
-export MY_DOT_FILES="$SCRIPT_DIR"
-source "\$MY_DOT_FILES/index.sh"
+export MY_DOTFILES="$SCRIPT_DIR"
+source "\$MY_DOTFILES/index.sh"
 EOF
 }
 
@@ -303,8 +307,10 @@ install_oh_my_zsh_plugin_zsh_syntax_highlighting
 install_oh_my_zsh_plugin_zsh_completions
 install_oh_my_zsh_theme_powerlevel10k
 
+install_helm_plugins
 install_vault
 install_vscode
+install_spotify
 
 install_fonts
 install_iterm
@@ -313,4 +319,3 @@ configure_iterm
 
 install_dotfiles
 
-add_secrets

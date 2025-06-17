@@ -13,18 +13,19 @@
 
 
 # ? +-----------------------------------------------------------+
-# ? | cat                                                       |
+# ? | bat                                                       |
 # ? +-----------------------------------------------------------+
 # ? | Use bat instead of cat.                                   |
 # ? +-----------------------------------------------------------+
-alias cat='bat'
+alias c='bat'
 
 # ? +-----------------------------------------------------------+
 # ? | k                                                         |
 # ? +-----------------------------------------------------------+
 # ? | Alias to kubectl.                                         |
 # ? +-----------------------------------------------------------+
-alias k='kubectl'
+alias k="kubectl"
+alias k.context="kubectl config use-context $1"
 
 # https://krew.sigs.k8s.io/
 # Krew is the plugin manager for kubectl command-line tool.
@@ -50,9 +51,3 @@ alias g.pull="git pull origin master --force"
 alias g.fetch="git fetch origin --prune --prune-tags --force"
 alias g.rebase="git rebase origin/master -i"
 alias g.update="g.fetch && g.pull"
-
-# ? +-----------------------------------------------------------+
-# ? | ContaAzul Paths                                           |
-# ? +-----------------------------------------------------------+
-alias ca_erp="cd $HOME/Workspace/ContaAzul"
-alias ca_ip="cd $HOME/Workspace/contaazul-ip"
